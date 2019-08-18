@@ -62,8 +62,23 @@ class LoadingActivity : AppCompatActivity() {
             run {
                 Thread.sleep(5000)
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                //Check if someone is already logged in if not go to login activity
+                val f = File(filesDir, "UserData.txt")
+                if (f.exists()) {
+                    var input = f.bufferedReader().readLines()
+                    if(input.isNotEmpty()) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else {
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                else {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 

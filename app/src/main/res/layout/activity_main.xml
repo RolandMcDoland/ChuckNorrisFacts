@@ -42,6 +42,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/factTextView" android:textColor="#FFFFFF"
                     android:textSize="24sp" android:textStyle="bold" android:background="#313131"/>
+            <Button
+                    android:text="logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/logoutButton"/>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
