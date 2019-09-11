@@ -65,8 +65,13 @@ class MainActivity : AppCompatActivity() {
             fact = factJson.get("value")
         }
         else {
-            val factArray = factJson.get("result")
-            fact = JSONArray(factArray.toString()).getJSONObject((0..(factJson.get("total").toString().toInt() - 1)).random()).get("value")
+            if(factJson.get("total").toString().toInt() != 0) {
+                val factArray = factJson.get("result")
+                fact = JSONArray(factArray.toString()).getJSONObject((0..(factJson.get("total").toString().toInt() - 1)).random()).get("value")
+            }
+            else {
+                fact = "No results found!"
+            }
         }
 
         //Put the fact in the proper textView
