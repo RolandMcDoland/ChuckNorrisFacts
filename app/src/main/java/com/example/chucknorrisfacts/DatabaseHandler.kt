@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 class DatabaseHandler (context: Context) :
-    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSIOM) {
+    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME" +
-                "($USERNAME TEXT PRIMARY KEY NOT NULL, $PASSWORD TEXT)"
+                "($USERNAME TEXT PRIMARY KEY NOT NULL, $PASSWORD TEXT, $FAV_FACT TEXT)"
         db?.execSQL(CREATE_TABLE)
     }
 
@@ -42,12 +42,12 @@ class DatabaseHandler (context: Context) :
             if (cursor.moveToFirst()) {
                 do {
                     var firstName = cursor.getString(cursor.getColumnIndex(USERNAME))
-                    var lastName = cursor.getString(cursor.getColumnIndex(PASSWORD))
+                    var password = cursor.getString(cursor.getColumnIndex(PASSWORD))
 
-                    if(user.equals(firstName) && pass.equals(lastName))
+                    if(user.equals(firstName) && pass.equals(password))
                     {
                         out.username = firstName
-                        out.password = lastName
+                        out.password = password
                         break
                     }
                 } while (cursor.moveToNext())
@@ -58,23 +58,49 @@ class DatabaseHandler (context: Context) :
         return out
     }
 
+    // Get favourite fact of current user
+    fun getFavouriteFact(user: String): String {
+        var result = ""
+
+        val db = readableDatabase
+        val selectALLQuery = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(selectALLQuery, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    var firstName = cursor.getString(cursor.getColumnIndex(USERNAME))
+
+                    if(user.equals(firstName))
+                    {
+                        result = cursor.getString(cursor.getColumnIndex(FAV_FACT))
+                        break
+                    }
+                } while (cursor.moveToNext())
+            }
+        }
+        cursor.close()
+        db.close()
+        return result
+    }
+
     fun updateUser(user: Users) {
         val db = this.writableDatabase
         var values = ContentValues()
         values.put(USERNAME, user.username)
         values.put(PASSWORD, user.password)
+        values.put(FAV_FACT, user.favouriteFact)
 
-        val retVal = db.update(TABLE_NAME, values, "username = " + user.username, null)
+        val retVal = db.update(TABLE_NAME, values, "username = '" + user.username + "'", null)
 
         db.close()
-
     }
 
     companion object {
         private val DB_NAME = "UsersDB"
-        private val DB_VERSIOM = 1;
+        private val DB_VERSION = 1;
         private val TABLE_NAME = "users"
         private val USERNAME = "username"
         private val PASSWORD = "password"
+        private val FAV_FACT = "fav_fact"
     }
 }

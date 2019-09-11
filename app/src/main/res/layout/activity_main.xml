@@ -21,18 +21,23 @@
                     android:id="@+id/searchEditText" android:textColor="#FFFFFF" android:textColorLink="#FFFFFF"
                     android:textColorHint="#FFFFFF" android:textColorHighlight="#FFFFFF"
                     android:textCursorDrawable="@color/colorAccent"/>
+            <Button
+                    android:text="search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/searchButton" android:layout_weight="1"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <Button
-                        android:text="search"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/searchButton" android:layout_weight="1"/>
-                <Button
                         android:text="random"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/randomButton" android:layout_weight="1"/>
+                <Button
+                        android:text="Favourite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/favouriteButton"
+                        android:layout_weight="1"/>
             </LinearLayout>
             <ImageView
                     android:layout_width="match_parent"
@@ -42,6 +47,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/factTextView" android:textColor="#FFFFFF"
                     android:textSize="24sp" android:textStyle="bold" android:background="#313131"/>
+            <Button
+                    android:text="Save as favourite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/saveFavouriteButton"/>
             <Button
                     android:text="logout"
                     android:layout_width="match_parent"
